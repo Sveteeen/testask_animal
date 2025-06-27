@@ -79,7 +79,7 @@ function playPet() {
 }
 
 module.exports = {
-    pet,
+    getPet: () => pet,
     createPet,
     updateStatus,
     feedPet,

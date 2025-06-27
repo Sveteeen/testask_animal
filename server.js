@@ -3,7 +3,7 @@ const app = express();
 const PORT = 3001;
 
 const {
-    pet,
+    getPet,
     createPet,
     updateStatus,
     feedPet,
@@ -20,11 +20,12 @@ setInterval(() => {
 
 // получаем текущее состояние
 app.get('/pet', (req, res) => {
-    if (!pet) {
+    const currentPet = getPet();
+    if (!currentPet) {
         return res.status(404).json({message: "Питомец не создан"});
     }
     updateStatus();
-    res.json(pet);
+    res.json(getPet());
 })
 
 // Создать нового питомца
@@ -34,18 +35,20 @@ app.post('/pet', (req, res) => {
     if (!name || typeof name !== 'string') {
         return res.status(400).json({ message: 'Укажите имя питомца' });
     }
-
-    if (pet && pet.status !== 'dead') {
+    
+    const currentPet = getPet();
+    if (currentPet && currentPet.status !== 'dead') {
         return res.status(400).json({ message: 'Питомец уже существует' });
     }
 
     createPet(name);
-    res.status(201).json(pet);
+    res.status(201).json(getPet());
 });
 
 // Покормить питомца
 app.post('/pet/feed', (req, res) => {
-    if (!pet) {
+    const currentPet = getPet();
+    if (!currentPet) {
         return res.status(404).json({ message: 'Питомец не создан' });
     }
 
@@ -53,12 +56,13 @@ app.post('/pet/feed', (req, res) => {
         return res.status(400).json({ message: 'Питомец мёртв' });
     }
 
-    res.json(pet);
+    res.json(getPet);
 });
 
 // Лечить питомца
 app.post('/pet/heal', (req, res) => {
-    if (!pet) {
+    const currentPet = getPet();
+    if (!getPet) {
         return res.status(404).json({ message: 'Питомец не создан' });
     }
 
@@ -66,12 +70,13 @@ app.post('/pet/heal', (req, res) => {
         return res.status(400).json({ message: 'Питомец мёртв' });
     }
 
-    res.json(pet);
+    res.json(getPet());
 });
 
 // Играть с питомцем
 app.post('/pet/play', (req, res) => {
-    if (!pet) {
+    const currentPet = getPet();
+    if (!currentPet) {
         return res.status(404).json({ message: 'Питомец не создан' });
     }
 
@@ -79,7 +84,7 @@ app.post('/pet/play', (req, res) => {
         return res.status(400).json({ message: 'Питомец мёртв' });
     }
 
-    res.json(pet);
+    res.json(getPet());
 });
 
 app.listen(PORT, () => {
