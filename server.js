@@ -56,7 +56,7 @@ app.post('/pet/feed', (req, res) => {
         return res.status(400).json({ message: 'Питомец мёртв' });
     }
 
-    res.json(getPet);
+    res.json(getPet());
 });
 
 // Лечить питомца
