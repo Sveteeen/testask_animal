@@ -13,7 +13,7 @@ function createPet(name) {
 }
 
 function calculateMood() {
-    pet.mood = (pet.health + (100 - pet.hunger)) / 2;
+    pet.mood = Math.round((pet.health + (100 - pet.hunger)) / 2);
 }
 
 function updateStatus(){
