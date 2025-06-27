@@ -7,7 +7,7 @@ function createPet(name) {
         health: 100,
         hunger: 0,
         mood: 100,
-        statuss: 'alive',
+        status: 'alive',
         lastUpdate: Date.now()
     };
 }
@@ -17,7 +17,7 @@ function calculateMood() {
 }
 
 function updateStatus(){
-    if (!pet || pet.statuss === 'dead') return;
+    if (!pet || pet.status === 'dead') return;
 
     const now = Date.now();  //текущее время в миллисекундах
     const minutesPassed = Math.floor((now - pet.lastUpdate) / 60000);
@@ -33,23 +33,23 @@ function updateStatus(){
         calculateMood();
         getStatus();
         
-        if (pet.statuss === 'dead') break;
+        if (pet.status === 'dead') break;
     }
     pet.lastUpdate = now;
 }
 
 function getStatus() {
     if (pet.health > 30) {
-        pet.statuss = "alive";
+        pet.status = "alive";
     } else if (pet.health > 0 && pet.health <= 30) {
-        pet.statuss = "sick";
+        pet.status = "sick";
     } else if (pet.health <= 0 || pet.hunger >= 100) {
-        pet.statuss = "dead";
+        pet.status = "dead";
     }
 }
 
 function feedPet() {
-    if (pet.statuss === "dead") return false;
+    if (pet.status === "dead") return false;
 
     pet.hunger = Math.max(0, pet.hunger - 30);
     pet.mood = Math.min(100, pet.mood + 10);
@@ -59,7 +59,7 @@ function feedPet() {
 }
 
 function healPet() {
-    if (pet.statuss === "dead") return false;
+    if (pet.status === "dead") return false;
 
     pet.health = Math.min(100, pet.health + 20);
     pet.hunger = Math.max(0, pet.hunger - 10);
@@ -69,7 +69,7 @@ function healPet() {
 }
 
 function playPet() {
-    if (pet.statuss === "dead") return false;
+    if (pet.status === "dead") return false;
 
     pet.mood = Math.min(100, pet.mood + 15);
     pet.hunger = Math.min(100, pet.hunger + 5);
@@ -78,7 +78,7 @@ function playPet() {
     return true;
 }
 
-module.export = {
+module.exports = {
     pet,
     createPet,
     updateStatus,
